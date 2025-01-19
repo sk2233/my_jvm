@@ -19,11 +19,11 @@ public class ExceptionTest {
                 throw new Exception("2!");
             }
         } catch (IllegalArgumentException e) {
-            System.out.println("IllegalArgumentException");
+            System.out.println("catch IllegalArgumentException");
         } catch (RuntimeException e) {
-            System.out.println("RuntimeException");
+            System.out.println("catch RuntimeException");
         } catch (Exception e) {
-            System.out.println("Exception");
+            System.out.println("catch Exception");
         } finally { // 会为每个  catch 独立生成 finally 代码进行执行 而不是使用 goto 跳转
             System.out.println(x);
         }

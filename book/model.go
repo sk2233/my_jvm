@@ -162,6 +162,15 @@ func (c *Code) FindException(class *Class, pc uint16, obj *Object) *Exception {
 	return nil
 }
 
+func (c *Code) GetLineNumberTable() []*LineNumber {
+	for _, attribute := range c.Attributes {
+		if attribute.Name == AttributeLineNumberTable {
+			return attribute.LineNumbers
+		}
+	}
+	return nil
+}
+
 type LineNumber struct {
 	Start uint16
 	Line  uint16

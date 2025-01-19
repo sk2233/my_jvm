@@ -187,7 +187,8 @@ func RunMain(class *Class, loader *Loader, args []string) {
 }
 
 var (
-	Instructions = make(map[byte]Instruction)
+	Instructions     = make(map[byte]Instruction)
+	InstructionNames = make(map[byte]string)
 )
 
 func InitInstruction() {
@@ -371,6 +372,186 @@ func InitInstruction() {
 		0xC6: InstructionIfNull,
 		0xC7: InstructionIfNonNull,
 	}
+	InstructionNames = map[byte]string{
+		// constants
+		0x00: "Nop",
+		0x01: "AConstNull",
+		0x03: "IConst0",
+		0x04: "IConst1",
+		0x05: "IConst2",
+		0x06: "IConst3",
+		0x07: "IConst4",
+		0x08: "IConst5",
+		0x09: "LConst0",
+		0x0A: "LConst1",
+		0x0B: "FConst0",
+		0x0E: "DConst0",
+		0x10: "BIPush",
+		0x11: "SIPush",
+		0x12: "Ldc",
+		0x13: "LdcW",
+		0x14: "LdcW",
+		// Integer
+		0x15: "Load",
+		0x1A: "Load0",
+		0x1B: "Load1",
+		0x1C: "Load2",
+		0x1D: "Load3",
+		// Long
+		0x16: "2Load",
+		0x1E: "2Load0",
+		0x1F: "2Load1",
+		0x20: "2Load2",
+		0x21: "2Load3",
+		// Float
+		0x17: "Load",
+		0x22: "Load0",
+		0x23: "Load1",
+		0x24: "Load2",
+		0x25: "Load3",
+		// Double
+		0x18: "2Load",
+		0x26: "2Load0",
+		0x27: "2Load1",
+		0x28: "2Load2",
+		0x29: "2Load3",
+		// 对象
+		0x19: "Load",
+		0x2A: "Load0",
+		0x2B: "Load1",
+		0x2C: "Load2",
+		0x2D: "Load3",
+		// 数组
+		0x2E: "ALoad",
+		0x2F: "2ALoad",
+		0x30: "ALoad",
+		0x31: "2ALoad",
+		0x32: "ALoad",
+		0x33: "ALoad",
+		0x34: "ALoad",
+		0x35: "ALoad",
+		// Integer
+		0x36: "Store",
+		0x3B: "Store0",
+		0x3C: "Store1",
+		0x3D: "Store2",
+		0x3E: "Store3",
+		// Long
+		0x37: "2Store",
+		0x3F: "2Store0",
+		0x40: "2Store1",
+		0x41: "2Store2",
+		0x42: "2Store3",
+		// Float
+		0x38: "Store",
+		0x43: "Store0",
+		0x44: "Store1",
+		0x45: "Store2",
+		0x46: "Store3",
+		// Double
+		0x39: "2Store",
+		0x47: "2Store0",
+		0x48: "2Store1",
+		0x49: "2Store2",
+		0x4A: "2Store3",
+		// 对象
+		0x3A: "Store",
+		0x4B: "Store0",
+		0x4C: "Store1",
+		0x4D: "Store2",
+		0x4E: "Store3",
+		// array
+		0x4F: "AStore",
+		0x50: "2AStore",
+		0x51: "AStore",
+		0x52: "2AStore",
+		0x53: "AStore",
+		0x54: "AStore",
+		0x55: "AStore",
+		0x56: "AStore",
+		// stack
+		0x57: "Pop",
+		0x58: "Pop2",
+		0x59: "Dup",
+		0x5A: "DupX1",
+		0x5B: "DupX2",
+		0x5C: "Dup2",
+		0x5D: "Dup2X1",
+		0x5E: "Dup2X2",
+		0x5F: "Swap",
+		// math
+		0x60: "IAdd",
+		0x61: "LAdd",
+		0x62: "FAdd",
+		0x63: "DAdd",
+		0x64: "ISub",
+		0x65: "LSub",
+		0x66: "FSub",
+		0x67: "DSub",
+		0x68: "IMul",
+		0x69: "LMul",
+		0x6A: "FMul",
+		0x6B: "DMul",
+		0x6C: "IDiv",
+		0x6D: "LDiv",
+		0x6E: "FDiv",
+		0x6F: "DDiv",
+		0x70: "IMod",
+		0x71: "LMod",
+		0x72: "FMod",
+		0x73: "DMod",
+		0x74: "INeg",
+		0x75: "LNeg",
+		0x76: "FNeg",
+		0x77: "DNeg",
+		0x7e: "IAnd",
+		0x7F: "LAnd",
+		0x80: "IOr",
+		0x81: "LOr",
+		0x82: "IXor",
+		0x83: "LXor",
+		0x84: "IInc",
+		// conversions
+		0x91: "I2b",
+		// comparisons
+		0x94: "LCmp",
+		0x99: "IfEq",
+		0x9A: "IfNe",
+		0x9D: "IfGt",
+		0xA0: "IfICmpNe",
+		0xA2: "IfICmpGe",
+		0xA3: "IfICmpGt",
+		0xA4: "IfICmpLe",
+		0xA6: "IfACmpNe",
+		0xA7: "GoTo",
+		// control
+		0xAC: "Return1",
+		0xAD: "Return2",
+		0xAE: "Return1",
+		0xAF: "Return2",
+		0xB0: "Return1",
+		0xB1: "Return",
+		// references
+		0xB2: "GetStatic",
+		0xB3: "PutStatic",
+		0xB4: "GetField",
+		0xB5: "PutField",
+		0xB6: "InvokeVirtual",
+		0xB7: "InvokeSpecial",
+		0xB8: "InvokeStatic",
+		0xB9: "InvokeInterface",
+		0xBB: "New",
+		0xBC: "NewArray",
+		0xBD: "ObjArray",
+		0xBE: "ArrayLen",
+		0xBF: "AThrow",
+		0xC0: "CheckCast",
+		0xC1: "InstanceOf",
+		0xC5: "MultiArray",
+		// extended
+		0xC6: "IfNull",
+		0xC7: "IfNonNull",
+	}
 }
 
 var (
@@ -401,16 +582,28 @@ func RunMethod(thread *Thread, method *Field, args []*Value) {
 	code := method.GetCodeAttribute()
 	thread.Push(NewFrame(method, int(code.MaxLocal), int(code.MaxStack), args))
 	pc := 0
+	class := method.Class
+	name := class.GetString(class.ThisIndex) + "." + class.GetString(method.NameIndex)
+	table := code.GetLineNumberTable()
 	for pc < len(code.Code) {
 		opCode := code.Code[pc]
-		fmt.Printf("pc:%d inst:%T %x\n", pc, Instructions[opCode], opCode)
+		fmt.Printf("pc:%d opcode:%x %s %s:%d\n", pc, opCode, InstructionNames[opCode], name, GetLine(table, uint16(pc)))
 		pc++
 		if instruction, ok := Instructions[opCode]; ok {
-			pc = instruction(thread, method.Class, code, pc)
+			pc = instruction(thread, class, code, pc)
 		} else {
 			panic(fmt.Sprintf("opcode %x not found", opCode))
 		}
 	}
+}
+
+func GetLine(table []*LineNumber, pc uint16) uint16 {
+	for _, item := range table {
+		if item.Start >= pc { // 量级比较小可以循环
+			return item.Line
+		}
+	}
+	return 0
 }
 
 type MethodDesc struct {

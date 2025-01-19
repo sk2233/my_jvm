@@ -144,7 +144,7 @@ func (p *Parser) ParseAttributes(consts []*Const) []*Attribute {
 		case AttributeConstantValue:
 			attr.ConstantValueIndex = temp.ReadU16()
 		default:
-			fmt.Println("unknown attribute:", attr.Name)
+			//fmt.Println("unknown attribute:", attr.Name)
 			attr.Data = temp.ReadAll()
 		}
 		attrs = append(attrs, attr)
